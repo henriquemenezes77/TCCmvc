@@ -20,8 +20,12 @@
                                 <label for="descricao" class="col-md-4 control-label">Descrição:</label>
 
                                 <div class="col-md-6">
+                                @if(Request::is('*/editar'))
+                                    <input type="text" id="descricao" class="form-control" name="descricao" value="{{ $categoria->descricao }}" >
+                                @else
                                     <input id="descricao" type="text" class="form-control" name="descricao" value="{{ old('descricao') }}"
                                            required autofocus>
+                                @endif
 
                                     @if ($errors->has('descricao'))
                                         <span class="help-block">
@@ -34,7 +38,11 @@
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4"><br>
                                     <button type="submit" class="btn btn-primary ">
-                                        Cadastrar
+                                        @if(Request::is("*/editar"))
+                                            Editar
+                                        @else
+                                            Cadastrar
+                                        @endif
                                     </button>
                                 </div>
                             </div>

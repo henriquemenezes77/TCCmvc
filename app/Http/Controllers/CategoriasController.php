@@ -51,9 +51,15 @@ class CategoriasController extends Controller
         $this->validate($request, [
             'descricao' => 'required|min:6|max:20',
         ]);
-        $categoria = Categoria::create([
-            'descricao' => $request['descricao'],
-        ]);
+        
+
+        //vc pode criar o objeto assim (desde que vc configure os valores fillable no model)
+        Categoria::create($request->all());
+
+        // $categoria = Categoria::create([
+        //     'descricao' => $request['descricao'],
+        // ]);
+
         \Session::flash('mensagem_sucesso_categoria', 'Categoria cadastrada com sucesso!!');
         return Redirect::to('categorias');
     }
@@ -77,7 +83,7 @@ class CategoriasController extends Controller
      */
     public function edit(Categoria $categoria)
     {
-        return view('categorias.formulario', ['categoria' => $categoria]);
+        return view('categorias.formulario')->with('categoria', $categoria);
     }
 
     /**
@@ -89,10 +95,11 @@ class CategoriasController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
+        //só uma vez ja funciona :)
         $categoria->update($request->all());
-        $categoria->update([
-            'descricao' => $request['descricao'],
-        ]);
+        // $categoria->update([
+        //     'descricao' => $request['descricao'],
+        // ]);
         \Session::flash('mensagem_sucesso_categoria', 'Categoria atualizada com sucesso!!');
         return Redirect::to('categorias');
     }
