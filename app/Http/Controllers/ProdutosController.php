@@ -49,19 +49,12 @@ class ProdutosController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'descricao' => 'required|max:100',
-        //     'valor' => 'required|numeric',
-        //     'id_categorias' => 'required',
-        // ]);
-
-        //verifica se a img existe e é válida.. e faz a 
+        //verifica se a img existe e é válida.. e faz a
         if($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
             //pega o nome da imagem para armazenar na base (nome+extensao)
             $filename = $request->imagem->getFilename() . '.' . $request->imagem->extension();
             //move a imagem para /public/images
             $request->imagem->move(public_path('images'), $filename);
-
             //salva o bixo..
             $produto = Produto::create([
                 'descricao' => $request['descricao'],

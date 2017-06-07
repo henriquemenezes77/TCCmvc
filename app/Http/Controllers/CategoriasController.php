@@ -27,7 +27,7 @@ class CategoriasController extends Controller
     public function index()
     {
         $categoria = Categoria::get();
-        return view('categorias.lista',['categorias'=>$categoria]);
+        return view('categorias.lista', ['categorias' => $categoria]);
     }
 
     /**
@@ -51,15 +51,8 @@ class CategoriasController extends Controller
         $this->validate($request, [
             'descricao' => 'required|min:6|max:20',
         ]);
-        
-
         //vc pode criar o objeto assim (desde que vc configure os valores fillable no model)
         Categoria::create($request->all());
-
-        // $categoria = Categoria::create([
-        //     'descricao' => $request['descricao'],
-        // ]);
-
         \Session::flash('mensagem_sucesso_categoria', 'Categoria cadastrada com sucesso!!');
         return Redirect::to('categorias');
     }
@@ -95,11 +88,7 @@ class CategoriasController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
-        //só uma vez ja funciona :)
         $categoria->update($request->all());
-        // $categoria->update([
-        //     'descricao' => $request['descricao'],
-        // ]);
         \Session::flash('mensagem_sucesso_categoria', 'Categoria atualizada com sucesso!!');
         return Redirect::to('categorias');
     }
@@ -113,7 +102,7 @@ class CategoriasController extends Controller
     public function destroy(Categoria $categoria)
     {
         $categoria->delete();
-        \Session::flash('mensagem_sucesso_categoria','Deletado com sucesso!');
+        \Session::flash('mensagem_sucesso_categoria', 'Deletado com sucesso!');
         return back();
     }
 }
