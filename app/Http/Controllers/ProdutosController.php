@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Produto;
+use App\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 
 class ProdutosController extends Controller
 {
@@ -25,8 +27,7 @@ class ProdutosController extends Controller
      */
     public function index()
     {
-        $produto = Produto::get();
-        return view('produtos.lista', ['produtos' => $produto]);
+        return view('produtos.lista')->with('produtos', Produto::all());
     }
 
     /**
@@ -36,7 +37,8 @@ class ProdutosController extends Controller
      */
     public function novo()
     {
-        return view('produtos.formulario');
+        //se vc quiser ter a lista de categorias na sua view vc tem que enviar elas pra lá.. :)
+        return view('produtos.formulario')->with('categorias', Categoria::all());
     }
 
     /**
@@ -47,19 +49,30 @@ class ProdutosController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'descricao' => 'required|max:100',
-            'valor' => 'required|numeric',
-            'id_categorias' => 'required',
-        ]);
-        $produto = Produto::create([
-            'descricao' => $request['descricao'],
-            'valor' => $request['valor'],
-            'id_categorias' => $request['id_categorias'],
-            'imagem' => $request['imagem'],
-        ]);
-        \Session::flash('mensagem_sucesso_produtos', 'Produto cadastrado com sucesso!!');
-        return Redirect::to('produtos');
+        // $this->validate($request, [
+        //     'descricao' => 'required|max:100',
+        //     'valor' => 'required|numeric',
+        //     'id_categorias' => 'required',
+        // ]);
+
+        //verifica se a img existe e é válida.. e faz a 
+        if($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+            //pega o nome da imagem para armazenar na base (nome+extensao)
+            $filename = $request->imagem->getFilename() . '.' . $request->imagem->extension();
+            //move a imagem para /public/images
+            $request->imagem->move(public_path('images'), $filename);
+
+            //salva o bixo..
+            $produto = Produto::create([
+                'descricao' => $request['descricao'],
+                'valor' => $request['valor'],
+                'id_categorias' => $request['id_categorias'],
+                'imagem' => $filename,
+            ]);
+            
+            \Session::flash('mensagem_sucesso_produtos', 'Produto cadastrado com sucesso!!');
+            return Redirect::to('produtos');
+        }
     }
 
     /**

@@ -16,10 +16,10 @@ class CreateProdutos extends Migration
         Schema::create('produtos',function(Blueprint $table){
             $table->increments('id');
             $table->string('descricao',100);
-            $table->decimal('valor',5,2);
+            $table->decimal('valor',5,2); //n esquece de validar isto antes de armazenar senão da treta
             $table->integer('id_categorias')->unsigned();
             $table->foreign('id_categorias')->references('id')->on('categorias');
-            $table->string('imagem',100);
+            $table->string('imagem');
             $table->timestamps();
             });
     }
@@ -31,6 +31,6 @@ class CreateProdutos extends Migration
      */
     public function down()
     {
-        Schema::drop('produtos');
+        Schema::dropIfExists('produtos');
     }
 }

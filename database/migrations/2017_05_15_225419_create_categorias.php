@@ -15,7 +15,7 @@ class CreateCategorias extends Migration
     {
         Schema::create('categorias',function(Blueprint $table){
             $table->increments('id');
-            $table->string('descricao',10);
+            $table->string('descricao');
             $table->timestamps();
     });
     }
@@ -27,6 +27,6 @@ class CreateCategorias extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('categorias');
     }
 }
