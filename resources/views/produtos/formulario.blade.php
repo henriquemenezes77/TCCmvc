@@ -7,14 +7,12 @@
                     <div class="panel-heading">Cadastro de novo produto</div>
                     <div class="panel-body">
                         <a class="pull-right" href="{{url('produtos')}}">Listar produtos</a>
-                        <script
-                                src="https://code.jquery.com/jquery-3.2.1.js"
-                                integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-                                crossorigin="anonymous"></script>
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
                         <div class="panel-body">
                             <script>
-                                $(document).ready(function ($) {
-                                    $('#valor').mask('000.000.000,00',{reverse: true});
+                                $(document).ready(function() {
+                                    $('#valor').mask('000.000.000,00', {reverse: true});
                                 });
                             </script>
                             @if(Request::is('*/editar'))
