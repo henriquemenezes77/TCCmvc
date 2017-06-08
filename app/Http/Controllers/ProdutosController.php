@@ -27,7 +27,7 @@ class ProdutosController extends Controller
      */
     public function index()
     {
-        return view('produtos.lista')->with('produtos', Produto::all());
+        return view('produtos.lista')->with('produtos', Produto::all())->with('categorias', Categoria::all());
     }
 
     /**
@@ -37,7 +37,7 @@ class ProdutosController extends Controller
      */
     public function novo()
     {
-        //se vc quiser ter a lista de categorias na sua view vc tem que enviar elas pra lá.. :)
+        //retorna view novo produto com as categorias
         return view('produtos.formulario')->with('categorias', Categoria::all());
     }
 
@@ -49,13 +49,13 @@ class ProdutosController extends Controller
      */
     public function store(Request $request)
     {
-        //verifica se a img existe e é válida.. e faz a
+        //verifica se a img existe e é válida.. e faz a validação da mesma
         if($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
             //pega o nome da imagem para armazenar na base (nome+extensao)
             $filename = $request->imagem->getFilename() . '.' . $request->imagem->extension();
             //move a imagem para /public/images
             $request->imagem->move(public_path('images'), $filename);
-            //salva o bixo..
+            //salva
             $produto = Produto::create([
                 'descricao' => $request['descricao'],
                 'valor' => $request['valor'],
@@ -87,7 +87,8 @@ class ProdutosController extends Controller
      */
     public function edit(Produto $produto)
     {
-        return view('produtos.fomulario', ['produto' => $produto]);
+        $produto = Produto::with('id_categorias')->get();
+        return view('produtos.formulario', ['produto'=>$produto]);
     }
 
     /**

@@ -25,7 +25,7 @@
                                 <tr>
                                     <td>{{$produto -> descricao}}</td>
                                     <td>{{$produto -> valor}}</td>
-                                    <td>{{$produto -> id_categoria}}</td>
+                                    <td>{{$produto -> id_categorias}}</td>
                                     <td>{{$produto -> imagem}}</td>
                                     <td>
                                         <a href="produtos/{{$produto->id}}/editar"
@@ -37,8 +37,8 @@
                             @endforeach
                             </tbody>
                         </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 @endsection

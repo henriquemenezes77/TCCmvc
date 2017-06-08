@@ -36,7 +36,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('produtos/salvar', 'ProdutosController@store');
     Route::get('produtos/deletar/{produto}', 'ProdutosController@destroy');
     Route::get('produtos/{produto}/editar', 'ProdutosController@edit');
-    Route::patch('produtos/{produto}', 'ProdutosController@update');
+    Route::patch('produtos/{produtos}', 'ProdutosController@update');
 });
 //Auth::routes();
 

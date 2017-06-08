@@ -10,7 +10,7 @@ class Produto extends Model
       'descricao','valor','id_categorias','imagem'
     ];
 
-    public function categoria() {
+    public function produto() {
         return $this->belongsTo(Categoria::class,'categorias_id','id');
     }
 }
