@@ -10,7 +10,7 @@ class Categoria extends Model
         'descricao'
     ];
 
-    public function produtos() {
-        return $this->hasMany(Categoria::class,'categoria_id','id');
+    public function produto() {
+        return $this->hasMany(Categoria::class,'categorias_id','id');
     }
 }

@@ -35,8 +35,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('produtos/novo', 'ProdutosController@novo')->name('produto.novo');
     Route::post('produtos/salvar', 'ProdutosController@store');
     Route::get('produtos/deletar/{produto}', 'ProdutosController@destroy');
-    Route::get('produtos/{produto}/editar', 'ProdutosController@edit');
+    Route::get('produtos/editar/{produto}', 'ProdutosController@edit');
     Route::patch('produtos/{produtos}', 'ProdutosController@update');
+    View::composer('templates.main', 'CategoryComposer');
 });
 //Auth::routes();
 

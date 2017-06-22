@@ -1,22 +1,22 @@
 @extends('layouts.app')
 @section('content')
+    <head>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+        <script src="jquery.maskMoney.js" type="text/javascript"></script>
+    </head>
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Cadastro de novo produto</div>
                     <div class="panel-body">
+                        <script> $(function () {
+                                $('#valor').maskMoney();
+                            }) </script>
                         <a class="pull-right" href="{{url('produtos')}}">Listar produtos</a>
-                        <!--Tentando importar jquery -->
-                        <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-                        <script type="text/javascript">
-                            $(document).ready(function () {
-                                $('#valor').mask('000.000.000,00', {reverse: true});
-                            });</script>
                         <div class="panel-body">
-                            @if(Request::is('*/editar'))
-                                {{Form::model($produto,['method'=>'PATCH','url'=>'produtos/'.$produto->id])}}
+                            @if(Request::is('editar/*'))
+                                {{Form::model($produto,['method'=>'PATCH','url'=>'produtos/'.$produto->id,$categoria->id])}}
                             @else
                                 <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
                                       action="{{url('produtos/salvar')}}">

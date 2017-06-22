@@ -32,5 +32,6 @@ class CreateProdutos extends Migration
     public function down()
     {
         Schema::dropIfExists('produtos');
+        Schema::drop('categorias');
     }
 }
