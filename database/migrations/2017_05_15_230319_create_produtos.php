@@ -15,10 +15,10 @@ class CreateProdutos extends Migration
     {
         Schema::create('produtos',function(Blueprint $table){
             $table->increments('id');
-            $table->string('descricao',100);
-            $table->decimal('valor',5,2); //n esquece de validar isto antes de armazenar senão da treta
+            $table->string('descricao');
+            $table->decimal('valor',10,2);
             $table->integer('id_categorias')->unsigned();
-            $table->foreign('id_categorias')->references('id')->on('categorias');
+            $table->foreign('id_categorias')->references('id')->on('categorias')->onDelete('cascade');
             $table->string('imagem');
             $table->timestamps();
             });
@@ -32,5 +32,6 @@ class CreateProdutos extends Migration
     public function down()
     {
         Schema::dropIfExists('produtos');
+        Schema::drop('categorias');
     }
 }

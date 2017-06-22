@@ -25,10 +25,10 @@
                                 <tr>
                                     <td>{{$produto -> descricao}}</td>
                                     <td>{{$produto -> valor}}</td>
-                                    <td>{{$produto -> id_categoria}}</td>
+                                    <td>{{$produto -> id_categorias}}</td>
                                     <td>{{$produto -> imagem}}</td>
                                     <td>
-                                        <a href="produtos/{{$produto->id}}/editar"
+                                        <a href="produtos/editar/{{$produto->id}}"
                                            class="btn btn-default btn-sm">Editar</a>
                                         <a href="categorias/deletar/{{$produto->id}}"
                                            class="btn btn-default btn-sm">Excluir</a>
@@ -37,8 +37,8 @@
                             @endforeach
                             </tbody>
                         </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 @endsection

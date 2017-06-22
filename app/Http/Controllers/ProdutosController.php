@@ -27,7 +27,7 @@ class ProdutosController extends Controller
      */
     public function index()
     {
-        return view('produtos.lista')->with('produtos', Produto::all());
+        return view('produtos.lista')->with('produtos', Produto::all())->with('categorias', Categoria::all());
     }
 
     /**
@@ -37,7 +37,7 @@ class ProdutosController extends Controller
      */
     public function novo()
     {
-        //se vc quiser ter a lista de categorias na sua view vc tem que enviar elas pra lá.. :)
+        //retorna view novo produto com as categorias
         return view('produtos.formulario')->with('categorias', Categoria::all());
     }
 
@@ -49,27 +49,20 @@ class ProdutosController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'descricao' => 'required|max:100',
-        //     'valor' => 'required|numeric',
-        //     'id_categorias' => 'required',
-        // ]);
-
-        //verifica se a img existe e é válida.. e faz a 
-        if($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+        //verifica se a img existe e é válida.. e faz a validação da mesma
+        if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
             //pega o nome da imagem para armazenar na base (nome+extensao)
             $filename = $request->imagem->getFilename() . '.' . $request->imagem->extension();
             //move a imagem para /public/images
             $request->imagem->move(public_path('images'), $filename);
-
-            //salva o bixo..
+            //salva
             $produto = Produto::create([
                 'descricao' => $request['descricao'],
                 'valor' => $request['valor'],
                 'id_categorias' => $request['id_categorias'],
                 'imagem' => $filename,
             ]);
-            
+
             \Session::flash('mensagem_sucesso_produtos', 'Produto cadastrado com sucesso!!');
             return Redirect::to('produtos');
         }
@@ -92,9 +85,12 @@ class ProdutosController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Produto $produto)
+    Public function edit(Produto $produto, Categoria $categoria)
     {
-        return view('produtos.fomulario', ['produto' => $produto]);
+        $produto=Produto::all();
+        $categoria=Categoria::all();;
+        return view('produtos.formulario')->with('produtos', Produto::all())->with('categorias', Categoria::all());
+        //return view('produtos.formulario', ['produto' => $produto]);
     }
 
     /**
@@ -104,8 +100,10 @@ class ProdutosController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Produto $produto)
+    public function update(Request $request, Produto $produto, Categoria $categoria)
     {
+        $produto=Produto::all();;
+        $categoria=Categoria::all();;
         $produto->update($request->all());
         $produto->update([
             'descricao' => $request['descricao'],
