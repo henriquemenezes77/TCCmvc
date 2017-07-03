@@ -17,6 +17,7 @@ class CreateCategorias extends Migration
             $table->increments('id')->onDelete('cascade');;
             $table->string('descricao');
             $table->timestamps();
+            
     });
     }
 

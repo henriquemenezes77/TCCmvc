@@ -11,7 +11,7 @@
                     </div>
 
                     <div class="panel-body">
-                        @if(Request::is('*/editar'))
+                        @if(Route::is('usuarios.editar'))
                             {{Form::model($user,['method'=>'PATCH','url'=>'usuarios/'.$user->id])}}
                         @else
                             {!! Form::open(['url'=>'usuarios/salvar']) !!}
@@ -33,13 +33,22 @@
                             @endif
                         </div>
 
-                        <div class="form-group">
-                            {!! Form::label('password','Senha: ') !!}
-                            {!! Form::input('password','password',null,['class'=>'form-control','','placeholder'=>'Senha']) !!}
-                            @if($errors->has('password'))
-                                <span class="help-block">{{$errors->first('password')}}</span>
-                            @endif
-                        </div>
+                        @if(Route::is('usuarios.novo'))
+                            <div class="form-group">
+                                {!! Form::label('password','Senha: ') !!}
+                                {!! Form::input('password','password',null,['class'=>'form-control','','placeholder'=>'Senha']) !!}
+                                @if($errors->has('password'))
+                                    <span class="help-block">{{$errors->first('password')}}</span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                {!! Form::label('password_confirmation','Confirme a Senha: ') !!}
+                                {!! Form::input('password','password_confirmation',null,['class'=>'form-control','','placeholder'=>'Confirme a Senha']) !!}
+                                @if($errors->has('password_confirmation'))
+                                    <span class="help-block">{{$errors->first('password_confirmation')}}</span>
+                                @endif
+                            </div>
+                        @endif
                         {!! Form::submit('Salvar',['class'=>'btn btn-primary']) !!}
                         {!! Form::close() !!}
                     </div>

@@ -21,11 +21,15 @@
                             <tbody>
                             @foreach($users as $user)
                             <tr>
-                                <td>{{$user -> name}}</td>
-                                <td>{{$user -> email}}</td>
+                                <td>{{$user->name}}</td>
+                                <td>{{$user->email}}</td>
                                 <td>
-                                    <a href="usuarios/{{$user->id}}/editar" class="btn btn-default btn-sm">Editar</a>
-                                    <a href="usuarios/deletar/{{$user->id}}" class="btn btn-default btn-sm" >Excluir</a>
+                                    <a href="{{route('usuarios.editar', $user->id)}}" class="btn btn-default btn-sm">Editar</a>
+                                    {{-- 
+                                        Talvez seja bom um popup aqui para confirmação?
+                                        E em todas as ações de remoção? :) 
+                                    --}}
+                                    <a href="{{route('usuarios.deletar', $user->id)}}" class="btn btn-default btn-sm" >Excluir</a>
                                 </td>
                             </tr>
                                 @endforeach
