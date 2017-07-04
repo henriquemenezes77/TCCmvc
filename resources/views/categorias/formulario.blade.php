@@ -5,10 +5,12 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Informe uma nova categoria.</div>
+                    <div class="panel-heading">
+                        Informe uma nova categoria.
+                        <a class="pull-right" href="{{url('categorias')}}">Listar categorias</a>
+                    </div>
                     <div class="panel-body">
 
-                            <a class="pull-right" href="{{url('categorias')}}">Listar categorias</a>
                             <div class="panel-body">
                                 @if(Request::is('*/editar'))
                                     {{Form::model($categoria,['method'=>'PATCH','url'=>'categorias/'.$categoria->id])}}

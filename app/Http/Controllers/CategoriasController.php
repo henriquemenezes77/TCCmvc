@@ -48,9 +48,12 @@ class CategoriasController extends Controller
      */
     public function store(Request $request)
     {
+        // vamos tentar setar um unique aqui pra n 
+        // permitir categorias duplicadas.
         $this->validate($request, [
-            'descricao' => 'required|min:6|max:20',
+            'descricao' => 'unique:categorias|required|min:6|max:20',
         ]);
+        
         //vc pode criar o objeto assim (desde que vc configure os valores fillable no model)
         Categoria::create($request->all());
         \Session::flash('mensagem_sucesso_categoria', 'Categoria cadastrada com sucesso!!');
@@ -101,8 +104,21 @@ class CategoriasController extends Controller
      */
     public function destroy(Categoria $categoria)
     {
-        $categoria->delete();
-        \Session::flash('mensagem_sucesso_categoria', 'Deletado com sucesso!');
-        return back();
+        // Este caso é pássivel de erro.. como vc deve ter notado.
+        // Pode ocorrer uma exceção aqui quando vc tentar remover uma categoria que possuí
+        // um produto vínculado.
+        // Para evitar um erro na cara do usuário.. nós podemos fazer uma tentativa de remoção.
+        // e caso der um erro.. nós tratamos ele.
+
+        try {
+            $categoria->delete();
+            \Session::flash('mensagem_sucesso_categoria', 'Deletado com sucesso!');
+            return back();
+        } catch (\Exception $e) {
+            // deu treta.. n pode ser removido pq tem um produto vinculado a essa
+            // categoria.. vamos avisar o usuário.
+            \Session::flash('mensagem_sucesso_categoria', 'A categoria esta vínculada a um ou mais Produtos. Se desejar removê-la é preciso remover ou alterar os seus produtos.');
+            return back();
+        } 
     }
 }

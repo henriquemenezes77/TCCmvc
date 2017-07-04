@@ -18,19 +18,18 @@
                             <th>Descrição:</th>
                             <th>Valor:</th>
                             <th>Categoria:</th>
-                            <th>Imagem:</th>
                             <th>Ações:</th>
                             <tbody>
                             @foreach($produtos as $produto)
                                 <tr>
-                                    <td>{{$produto -> descricao}}</td>
-                                    <td>{{$produto -> valor}}</td>
-                                    <td>{{$produto -> id_categorias}}</td>
-                                    <td>{{$produto -> imagem}}</td>
+                                    <td>{{$produto->descricao}}</td>
+                                    <td>{{$produto->valor}}</td>
+                                    {{-- Aqui em vez de id_categorias vc usa a relação e pega a categoria --}}
+                                    <td>{{$produto->categoria->descricao}}</td>
                                     <td>
                                         <a href="produtos/editar/{{$produto->id}}"
                                            class="btn btn-default btn-sm">Editar</a>
-                                        <a href="categorias/deletar/{{$produto->id}}"
+                                        <a href="produtos/deletar/{{$produto->id}}"
                                            class="btn btn-default btn-sm">Excluir</a>
                                     </td>
                                 </tr>

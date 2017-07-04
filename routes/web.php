@@ -18,10 +18,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home', 'HomeController@index');
     //usuarios
     Route::get('usuarios', 'UsuariosController@index');
-    Route::get('usuarios/novo', 'UsuariosController@novo')->name('usuario.novo');
-    Route::get('usuarios/deletar/{user}', 'UsuariosController@destroy')->name("usuario.deletar");
+    Route::get('usuarios/novo', 'UsuariosController@novo')->name('usuarios.novo');
+    Route::get('usuarios/deletar/{user}', 'UsuariosController@destroy')->name("usuarios.deletar");
     Route::post('usuarios/salvar', 'UsuariosController@salvar');
-    Route::get('usuarios/{user}/editar', 'UsuariosController@editar');
+    Route::get('usuarios/{user}/editar', 'UsuariosController@editar')->name('usuarios.editar');
     Route::patch('usuarios/{user}', 'UsuariosController@atualizar');
     //categorias
     Route::get('categorias', 'CategoriasController@index');
@@ -32,11 +32,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::patch('categorias/{categoria}', 'CategoriasController@update');
     //produtos
     Route::get('produtos', 'ProdutosController@index');
-    Route::get('produtos/novo', 'ProdutosController@novo')->name('produto.novo');
-    Route::post('produtos/salvar', 'ProdutosController@store');
+    Route::get('produtos/novo', 'ProdutosController@novo')->name('produtos.novo');
+    Route::post('produtos/salvar', 'ProdutosController@store')->name('produtos.salvar');
     Route::get('produtos/deletar/{produto}', 'ProdutosController@destroy');
-    Route::get('produtos/editar/{produto}', 'ProdutosController@edit');
-    Route::patch('produtos/{produtos}', 'ProdutosController@update');
+    Route::get('produtos/editar/{produto}', 'ProdutosController@edit')->name('produtos.editar');
+    Route::patch('produtos/{produto}', 'ProdutosController@update')->name('produtos.update');
     View::composer('templates.main', 'CategoryComposer');
 });
 //Auth::routes();

@@ -89,12 +89,22 @@ class UsuariosController extends Controller
      */
     public function atualizar(Request $request, User $user)
     {
-        $user->update($request->all());
+        //Não esquece de validar os dados do formulário
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'email|required'
+        ]);
+
         $user->update([
                 'name' => $request['name'],
                 'email' => $request['email'],
-                'password' => bcrypt($request['password']),
-            ]);
+                // Não é interessante atualizar a senha do usuário assim no mais..
+                // Talvez seja interessante fazer uma outra view para alterar a senha?
+                // Ou então ao menos solicitar que o usuário confirme a sua própria senha para poder alterar.
+                // E aqui, em vez de fazer um update direto da senha. Verificar se precisa ser alterada 
+                // (talvez com um checkbox?)
+                // 'password' => bcrypt($request['password']),
+        ]);
         \Session::flash('mensagem_sucesso', 'Usuario atualizado com sucesso!!');
         return Redirect::to('usuarios');
     }
