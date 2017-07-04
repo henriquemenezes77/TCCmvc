@@ -85,7 +85,7 @@ class ProdutosController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    Public function edit(Produto $produto, Categoria $categoria)
+    Public function edit(Produto $produto, Categoria $categoria, Request $request)
     {
         $produto=Produto::all();
         $categoria=Categoria::all();;
