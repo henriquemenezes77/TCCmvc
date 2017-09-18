@@ -89,12 +89,16 @@ class UsuariosController extends Controller
      */
     public function atualizar(Request $request, User $user)
     {
-        $user->update($request->all());
+       //valida os dados do formulario
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'email|required'
+        ]);
+
         $user->update([
                 'name' => $request['name'],
                 'email' => $request['email'],
-                'password' => bcrypt($request['password']),
-            ]);
+        ]);
         \Session::flash('mensagem_sucesso', 'Usuario atualizado com sucesso!!');
         return Redirect::to('usuarios');
     }

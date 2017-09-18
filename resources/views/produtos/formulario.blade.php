@@ -8,100 +8,91 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Cadastro de novo produto</div>
+                    <div class="panel-heading">
+                    @if(Route::is('produtos.editar'))
+                        Editando produto: <strong>{{$produto->descricao}}</strong>
+                    @else
+                        Cadastro de novo produto
+                    @endif
+                        <a class="pull-right" href="{{url('produtos')}}">Listar produtos</a>                    
+                    </div>
                     <div class="panel-body">
                         <script> $(function () {
-                                $('#valor').maskMoney();
+                                //$('#valor').maskMoney();
                             }) </script>
-                        <a class="pull-right" href="{{url('produtos')}}">Listar produtos</a>
                         <div class="panel-body">
-                            @if(Request::is('editar/*'))
-                                {{Form::model($produto,['method'=>'PATCH','url'=>'produtos/'.$produto->id,$categoria->id])}}
+                            @if(Route::is('produtos.editar'))
+                                {{-- Cara.. vc mistura mto as coisa haha.. vc a url pra edição de produtos é
+                                    produtos/$id .... que tem a ver a categoria?? --}}
+                                {{Form::model($produto,['class' => 'form-horizontal', 'method'=>'PATCH','url'=> route('produtos.update', $produto->id), 'files' => true])}}
+
+                                {{ Form::hidden('id') }}
+                                
+                                {{-- <form action="{{ route('produtos.editar', $produto->id) }}" class="form form-horizontal" role="form" enctype="multipart/form-data"> --}}
                             @else
-                                <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data"
-                                      action="{{url('produtos/salvar')}}">
-                                    @endif
-                                    {{ csrf_field() }}
-
-                                    <div class="form-group{{ $errors->has('descricao') ? ' has-error' : '' }}">
-                                        <label for="descricao" class="col-md-4 control-label">Descrição:</label>
-
+                                {{ Form::open(['class' => 'form-horizontal', 'method' => 'POST', 'url' => route('produtos.salvar'), 'files' => true]) }}
+                                {{-- <form class="form form-horizontal" role="form" method="POST"
+                                enctype="multipart/form-data"
+                                action="{{ route('produtos.salvar') }}"> --}}
+                            @endif
+                                    <div class="form-group">
+                                        {!! Form::label('descricao','Descrição: ',['class' => 'control-label col-md-4']) !!}
                                         <div class="col-md-6">
-                                            <input id="descricao" type="text" class="form-control" name="descricao"
-                                                   value="{{ old('descricao') }}"
-                                                   required autofocus>
-
-                                            @if ($errors->has('descricao'))
-                                                <span class="help-block">
-                                        <strong>{{ $errors->first('descricao') }}</strong>
-                                    </span>
-                                            @endif
+                                            {!! Form::input('text','descricao',null,['class'=>'form-control {{ $errors->has("descricao") ? "has-error" : "" }}','autofocus','placeholder'=>'Descriçao']) !!}
                                         </div>
+                                        @if($errors->has('name'))
+                                            <span class="help-block">{{$errors->first('name')}}</span>
+                                        @endif
                                     </div>
-                                    <div class="form-group{{ $errors->has('valor') ? ' has-error' : '' }}">
-                                        <label for="valor" class="col-md-4 control-label">Valor:</label>
 
+                                    <div class="form-group">
+                                        {!! Form::label('valor','Valor: ', ['class' => 'control-label col-md-4']) !!}
                                         <div class="col-md-6">
-                                            <input id="valor" type="text" class="form-control" name="valor"
-                                                   value="{{ old('valor') }}"
-                                                   required>
-
-                                            @if ($errors->has('valor'))
-                                                <span class="help-block">
-                                        <strong>{{ $errors->first('valor') }}</strong>
-                                    </span>
-                                            @endif
+                                            {!! Form::input('text','valor',null,['class'=>'form-control {{$errors->has("valor") ? "has-error" : ""}}','autofocus','placeholder'=>'Valor']) !!}
                                         </div>
+                                        @if($errors->has('name'))
+                                            <span class="help-block">{{$errors->first('name')}}</span>
+                                        @endif
                                     </div>
-                                    <div class="form-group{{ $errors->has('id_categoria') ? ' has-error' : '' }}">
-                                        <label for="id_categoria" class="col-md-4 control-label">Categoria:</label>
 
+                                    <div class="form-group">
+                                        {!! Form::label('categoria','Categoria: ', ['class' => 'control-label col-md-4']) !!}
                                         <div class="col-md-6">
-
-                                            <select id="id_categorias" class="form-control dropdown"
-                                                    name="id_categorias" value="{{ old('id_categoria') }}" required>
-
+                                            <select name="id_categorias" id="categoria" class="form-control">
                                                 @foreach($categorias as $categoria)
                                                     <option value="{{ $categoria->id }}">{{ $categoria->descricao }}</option>
                                                 @endforeach
-
                                             </select>
-
-
-                                            @if ($errors->has('id_categoria'))
-                                                <span class="help-block">
-                                        <strong>{{ $errors->first('id_categoria') }}</strong>
-                                    </span>
-                                            @endif
                                         </div>
+                                        @if($errors->has('name'))
+                                            <span class="help-block">{{$errors->first('name')}}</span>
+                                        @endif
                                     </div>
-                                    <div class="form-group{{ $errors->has('imagem') ? ' has-error' : '' }}">
-                                        <label for="descricao" class="col-md-4 control-label">Imagem:</label>
 
-                                        <div class="col-md-6">
-                                            @if ($errors->has('imagem'))
-                                                <span class="help-block">
-                                        <strong>{{ $errors->first('imagem') }}</strong>
-                                    </span>
-                                            @endif
-                                            <input id="imagem" type="file" name="imagem"
-                                                   value="{{ old('imagem') }}"
-                                                   required autofocus>
-                                        </div>
-                                    </div>
                                     <div class="form-group">
-                                        <div class="col-md-6 col-md-offset-4"><br>
-                                            <button type="submit" class="btn btn-primary ">
-                                                Cadastrar
-                                            </button>
+                                        {!! Form::label('imagem','Imagem: ', ['class' => 'control-label col-md-4']) !!}
+                                        <div class="col-md-6">
+                                            {!! Form::file('imagem') !!}
                                         </div>
                                     </div>
-                        </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-6 col-md-offset-4"><br>
+                                        <button type="submit" class="btn btn-primary ">
+                                        @if(Route::is('produtos.editar'))
+                                            Editar
+                                        @else
+                                            Cadastrar
+                                        @endif
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+</div>
 @endsection

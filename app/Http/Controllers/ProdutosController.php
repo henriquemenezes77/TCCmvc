@@ -63,16 +63,14 @@ class ProdutosController extends Controller
 
         //verifica se a img existe e faz a validação da mesma
         if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
-
-            // $filename = $this->saveImage($request, null);
-
             $filePath = $request->file('imagem')->store('public');
 
             //pega o nome da imagem para armazenar na base (nome+extensao)
-            // $filename = $request->imagem->getFilename() . '.' . $request->imagem->extension();
+            //$filename = $request->imagem->getFilename() . '.' . $request->imagem->extension();
             //move a imagem para /public/images
             // $request->imagem->move(public_path('images'), $filename);
             //salva
+
             $produto = Produto::create([
                 'descricao' => $request['descricao'],
                 'valor' => $request['valor'],
@@ -105,26 +103,13 @@ class ProdutosController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
-    Public function edit(Produto $produto, Categoria $categoria, Request $request)
-    {
-        $produto=Produto::all();
-        $categoria=Categoria::all();;
-        return view('produtos.formulario')->with('produtos', Produto::all())->with('categorias', Categoria::all());
-=======
+
     Public function edit(Produto $produto)
     {   
-        //aqui vc esta editando um ÚNICO produto.. logo é desncessário pegar todos da base n acha?
-        // $produto=Produto::all();
-
-        //vc seta estas variáveis mas não usa de fato.. pq ?
-        // $categoria=Categoria::all();
-
+        //aqui esta editando produto
         return view('produtos.formulario')
             ->with('produto', $produto)
             ->with('categorias', Categoria::all());
->>>>>>> cafb89602118c0cd97274213993ddc0b63fbfb7e
-        //return view('produtos.formulario', ['produto' => $produto]);
     }
 
     /**
@@ -136,6 +121,7 @@ class ProdutosController extends Controller
      */
     public function update(Request $request, Produto $produto)
     {
+        //atualização de produto
         $this->validate($request, [
             'descricao' => 'required',
             'valor' => 'required',
@@ -157,8 +143,6 @@ class ProdutosController extends Controller
         } else {
             $produto->update($request->all());
         }
-        
-        // $produto->save();
 
         \Session::flash('mensagem_sucesso_produtos', "Produto atualizado com sucesso");
         return Redirect::to('produtos');
@@ -172,6 +156,7 @@ class ProdutosController extends Controller
      */
     public function destroy(Produto $produto)
     {
+        //deleta produto
         $produto->delete();
         \Session::flash('mensagem_sucesso_produtos', 'Produto deletado!');
         return back();

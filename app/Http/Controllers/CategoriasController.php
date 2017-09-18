@@ -48,9 +48,12 @@ class CategoriasController extends Controller
      */
     public function store(Request $request)
     {
+        // vamos tentar setar um unique aqui pra n 
+        // permitir categorias duplicadas.
         $this->validate($request, [
-            'descricao' => 'required|min:6|max:20',
+            'descricao' => 'unique:categorias|required|min:6|max:20',
         ]);
+        
         //vc pode criar o objeto assim (desde que vc configure os valores fillable no model)
         Categoria::create($request->all());
         \Session::flash('mensagem_sucesso_categoria', 'Categoria cadastrada com sucesso!!');
@@ -101,8 +104,14 @@ class CategoriasController extends Controller
      */
     public function destroy(Categoria $categoria)
     {
-        $categoria->delete();
-        \Session::flash('mensagem_sucesso_categoria', 'Deletado com sucesso!');
-        return back();
+        try {
+            $categoria->delete();
+            \Session::flash('mensagem_sucesso_categoria', 'Deletado com sucesso!');
+            return back();
+        } catch (\Exception $e) {
+            \Session::flash('mensagem_sucesso_categoria', 'A categoria esta vínculada a um ou mais Produtos. 
+            Se desejar removê-la é preciso remover ou alterar os seus produtos.');
+            return back();
+        } 
     }
 }
