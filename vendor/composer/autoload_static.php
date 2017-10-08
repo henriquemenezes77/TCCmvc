@@ -299,6 +299,7 @@ class ComposerStaticInit73a316f772798a5393da508e8c212172
 
     public static $classMap = array (
         'CreateCategorias' => __DIR__ . '/../..' . '/database/migrations/2017_05_15_225419_create_categorias.php',
+        'CreateImagemCat' => __DIR__ . '/../..' . '/database/migrations/2017_10_05_013400_create_produto_img.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreateProdutos' => __DIR__ . '/../..' . '/database/migrations/2017_05_15_230319_create_produtos.php',
         'CreateUsuarios' => __DIR__ . '/../..' . '/database/migrations/2017_05_15_223620_create_usuarios.php',
@@ -753,6 +754,7 @@ class ComposerStaticInit73a316f772798a5393da508e8c212172
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'ProdutoImg' => __DIR__ . '/../..' . '/database/migrations/2017_10_05_022158_produto_img.php',
         'SebastianBergmann\\CodeCoverage\\CodeCoverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage.php',
         'SebastianBergmann\\CodeCoverage\\CoveredCodeNotExecutedException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/CoveredCodeNotExecutedException.php',
         'SebastianBergmann\\CodeCoverage\\Driver\\Driver' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Driver/Driver.php',

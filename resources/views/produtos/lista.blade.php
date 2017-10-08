@@ -24,7 +24,6 @@
                                 <tr>
                                     <td>{{$produto->descricao}}</td>
                                     <td>{{$produto->valor}}</td>
-                                    {{-- Aqui em vez de id_categorias vc usa a relação e pega a categoria --}}
                                     <td>{{$produto->categoria->descricao}}</td>
                                     <td>
                                         <a href="produtos/editar/{{$produto->id}}"

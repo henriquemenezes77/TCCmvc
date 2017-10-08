@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'CreateCategorias' => $baseDir . '/database/migrations/2017_05_15_225419_create_categorias.php',
+    'CreateImagemCat' => $baseDir . '/database/migrations/2017_10_05_013400_create_produto_img.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateProdutos' => $baseDir . '/database/migrations/2017_05_15_230319_create_produtos.php',
     'CreateUsuarios' => $baseDir . '/database/migrations/2017_05_15_223620_create_usuarios.php',
@@ -461,6 +462,7 @@ return array(
     'PHP_Token_XOR_EQUAL' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD_FROM' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
+    'ProdutoImg' => $baseDir . '/database/migrations/2017_10_05_022158_produto_img.php',
     'SebastianBergmann\\CodeCoverage\\CodeCoverage' => $vendorDir . '/phpunit/php-code-coverage/src/CodeCoverage.php',
     'SebastianBergmann\\CodeCoverage\\CoveredCodeNotExecutedException' => $vendorDir . '/phpunit/php-code-coverage/src/Exception/CoveredCodeNotExecutedException.php',
     'SebastianBergmann\\CodeCoverage\\Driver\\Driver' => $vendorDir . '/phpunit/php-code-coverage/src/Driver/Driver.php',

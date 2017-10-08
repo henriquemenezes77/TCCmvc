@@ -14,15 +14,14 @@ class CreateProdutos extends Migration
     public function up()
     {
         Schema::create('produtos',function(Blueprint $table){
-            $table->increments('id');
-            $table->string('descricao');
-            $table->decimal('valor',10,2);
-            $table->integer('id_categorias')->unsigned();
-            $table->string('imagem')->nullable();
-            $table->timestamps();
-
-            $table->foreign('id_categorias')->references('id')->on('categorias')->onDelete('cascade');
-            });
+        $table->increments('id');
+        $table->string('descricao',500);
+        $table->decimal('valor',10,2);
+        $table->integer('id_categorias')->unsigned();
+        $table->string('imagem')->nullable();
+        $table->timestamps();
+        $table->foreign('id_categorias')->references('id')->on('categorias')->onDelete('cascade');
+    });
     }
 
     /**

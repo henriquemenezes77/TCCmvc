@@ -51,14 +51,32 @@ class CategoriasController extends Controller
         // vamos tentar setar um unique aqui pra n 
         // permitir categorias duplicadas.
         $this->validate($request, [
-            'descricao' => 'unique:categorias|required|min:6|max:20',
+            'descricao' => 'unique:categorias|required|min:6|max:20'
         ]);
-        
-        //vc pode criar o objeto assim (desde que vc configure os valores fillable no model)
-        Categoria::create($request->all());
-        \Session::flash('mensagem_sucesso_categoria', 'Categoria cadastrada com sucesso!!');
-        return Redirect::to('categorias');
+
+        //verifica se a img existe e faz a validação da mesma
+        if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+            $filePath = $request->file('imagem')->store('public');
+
+            $categoria = Categoria::create([
+                'descricao' => $request['descricao'],
+                'imagem' => $filePath,
+            ]);
+            \Session::flash('mensagem_sucesso_categoria', 'Categoria cadastrada com sucesso!!');
+            return Redirect::to('categorias');
+        } else {
+            Categoria::create($request->all());
+            \Session::flash('mensagem_sucesso_categoria', 'Categoria cadastrada com sucesso!!');
+            return Redirect::to('categorias');
+        }
     }
+
+
+        //vc pode criar o objeto assim (desde que vc configure os valores fillable no model)
+        //Categoria::create($request->all());
+       // \Session::flash('mensagem_sucesso_categoria', 'Categoria cadastrada com sucesso!!');
+       // return Redirect::to('categorias');
+   // }
 
     /**
      * Display the specified resource.

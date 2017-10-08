@@ -77,6 +77,7 @@ class ProdutosController extends Controller
                 'id_categorias' => $request['id_categorias'],
                 'imagem' => $filePath,
             ]);
+
             \Session::flash('mensagem_sucesso_produtos', 'Produto cadastrado com sucesso!!');
             return Redirect::to('produtos');
         } else {
