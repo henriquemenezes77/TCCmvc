@@ -63,7 +63,7 @@
                                     <div class="form-group">
                                         {!! Form::label('imagem','Imagem: ', ['class' => 'control-label col-md-4']) !!}
                                         <div class="col-md-6">
-                                            <input type="file" name="imagem[]" multiple/>
+                                            <input type="file" name="imagem" multiple/>
                                         </div>
                                     </div>
                                 <div class="form-group">

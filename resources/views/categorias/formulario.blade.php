@@ -39,7 +39,7 @@
                                     <div class="form-group">
                                         {!! Form::label('imagem','Imagem: ', ['class' => 'control-label col-md-4']) !!}
                                         <div class="col-md-6">
-                                            {!! Form::file('imagem') !!}
+                                          <input type="file" name="imagem"/>
                                         </div>
                                     </div>
 

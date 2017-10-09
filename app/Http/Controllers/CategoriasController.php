@@ -51,12 +51,17 @@ class CategoriasController extends Controller
         // vamos tentar setar um unique aqui pra n 
         // permitir categorias duplicadas.
         $this->validate($request, [
-            'descricao' => 'unique:categorias|required|min:6|max:20'
+            'descricao' => 'unique:categorias|required|min:4|max:20'
         ]);
 
         //verifica se a img existe e faz a validação da mesma
         if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
             $filePath = $request->file('imagem')->store('public');
+        //pega o nome da imagem para armazenar na base (nome+extensao)
+            //$filename = $request->imagem->getFilename() . '.' . $request->imagem->extension();
+            //move a imagem para /public/images
+            //$request->imagem->move(public_path('images'));
+            //salva
 
             $categoria = Categoria::create([
                 'descricao' => $request['descricao'],
@@ -109,9 +114,35 @@ class CategoriasController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
-        $categoria->update($request->all());
-        \Session::flash('mensagem_sucesso_categoria', 'Categoria atualizada com sucesso!!');
+        //atualização de produto
+        $this->validate($request, [
+            'descricao' => 'required',
+        ]);
+
+        if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+
+            if (Storage::exists($categoria->imagem)) {
+                Storage::delete($categoria->imagem);
+                $categoria->imagem = null;
+            }
+
+            $filename = $request->file('imagem')->store('public');
+
+            $categoria->fill($request->all());
+            $categoria->imagem = $filename;
+            $categoria->update();
+        } else {
+            $categoria->update($request->all());
+        }
+
+        \Session::flash('mensagem_sucesso_categoria', "Categoria atualizada com sucesso");
         return Redirect::to('categorias');
+
+
+
+        //$categoria->update($request->all());
+        //\Session::flash('mensagem_sucesso_categoria', 'Categoria atualizada com sucesso!!');
+        //return Redirect::to('categorias');
     }
 
     /**
