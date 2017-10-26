@@ -111,6 +111,10 @@ class UsuariosController extends Controller
      */
     public function destroy(User $user)
     {
+        if($user->count()==1){
+            \Session::flash('msg_erro','Usuário não pode ser deletado!!');
+
+        }else
         $user->delete();
         \Session::flash('mensagem_sucesso','Usuario deletado com sucesso!!');
         return back();

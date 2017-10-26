@@ -48,8 +48,7 @@ class CategoriasController extends Controller
      */
     public function store(Request $request)
     {
-        // vamos tentar setar um unique aqui pra n 
-        // permitir categorias duplicadas.
+
         $this->validate($request, [
             'descricao' => 'unique:categorias|required|min:4|max:20'
         ]);
@@ -57,13 +56,8 @@ class CategoriasController extends Controller
         //verifica se a img existe e faz a validação da mesma
         if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
             $filePath = $request->file('imagem')->store('public');
-        //pega o nome da imagem para armazenar na base (nome+extensao)
-            //$filename = $request->imagem->getFilename() . '.' . $request->imagem->extension();
-            //move a imagem para /public/images
-            //$request->imagem->move(public_path('images'));
-            //salva
 
-            $categoria = Categoria::create([
+                $categoria = Categoria::create([
                 'descricao' => $request['descricao'],
                 'imagem' => $filePath,
             ]);
