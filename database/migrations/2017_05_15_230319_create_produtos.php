@@ -18,7 +18,7 @@ class CreateProdutos extends Migration
         $table->string('descricao',500);
         $table->decimal('valor',10,2);
         $table->integer('id_categorias')->unsigned();
-        $table->string('imagem')->nullable();
+        //$table->string('imagem')->nullable();
         $table->timestamps();
         $table->foreign('id_categorias')->references('id')->on('categorias')->onDelete('cascade');
     });

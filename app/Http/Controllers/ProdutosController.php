@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Produto;
 use App\Categoria;
+use App\ProdutosImg;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -63,8 +64,13 @@ class ProdutosController extends Controller
 
         //verifica se a img existe e faz a validação da mesma
         if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+            foreach ($request->imagem as $imagem){
             $filePath = $request->file('imagem')->store('public');
-
+            ProdutosImg::create([
+               'id_produto' =>$request->id,
+                'imagem' => $filePath,
+            ]);
+            }
             //pega o nome da imagem para armazenar na base (nome+extensao)
             //$filename = $request->imagem->getFilename() . '.' . $request->imagem->extension();
             //move a imagem para /public/images
@@ -77,6 +83,7 @@ class ProdutosController extends Controller
                 'id_categorias' => $request['id_categorias'],
                 'imagem' => $filePath,
             ]);
+
 
             \Session::flash('mensagem_sucesso_produtos', 'Produto cadastrado com sucesso!!');
             return Redirect::to('produtos');
