@@ -13,9 +13,9 @@
 
                             <div class="panel-body">
                                 @if(Request::is('*/editar'))
-                                    {{Form::model($categoria,['method'=>'PATCH','url'=>'categorias/'.$categoria->id])}}
+                                    {{Form::model($categoria,['method'=>'PATCH','url'=>'categorias/'.$categoria->id,'files'=>true])}}
                                 @else
-                                    {!! Form::open(['url'=>'categorias/salvar']) !!}
+                                    {!! Form::open(['url'=>'categorias/salvar','files'=>true]) !!}
                                 @endif
 
                             <div class="form-group{{ $errors->has('descricao') ? ' has-error' : '' }}">
@@ -39,7 +39,7 @@
                                     <div class="form-group">
                                         {!! Form::label('imagem','Imagem: ', ['class' => 'control-label col-md-4']) !!}
                                         <div class="col-md-6">
-                                          <input type="file" name="imagem"/>
+                                          <input type="file" name="imagem" multiple/>
                                         </div>
                                     </div>
 

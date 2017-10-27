@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class CategoriasController extends Controller
 {
@@ -54,8 +56,9 @@ class CategoriasController extends Controller
         ]);
 
         //verifica se a img existe e faz a validação da mesma
-        if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
-            $filePath = $request->file('imagem')->store('public');
+            if ($request->hasFile('imagem')&& $request->file('imagem')->isValid()) {
+                $filePath = $request->file('imagem')->store('public');
+
 
                 $categoria = Categoria::create([
                 'descricao' => $request['descricao'],

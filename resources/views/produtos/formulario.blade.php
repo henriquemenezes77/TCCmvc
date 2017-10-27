@@ -21,11 +21,13 @@
                         <div class="panel-body">
                             @if(Route::is('produtos.editar'))
 
-                                {{Form::model($produto,['class' => 'form-horizontal', 'method'=>'PATCH','url'=> route('produtos.update', $produto->id), 'files' => true])}}
+                                {{Form::model($produto,['class' => 'form-horizontal', 'method'=>'PATCH','url'=> route('produtos.update', $produto->id),
+                                'files' => true])}}
 
                                 {{ Form::hidden('id') }}
                             @else
-                                {{ Form::open(['class' => 'form-horizontal', 'method' => 'POST', 'url' => route('produtos.salvar'), 'files' => true]) }}
+                                {{ Form::open(['class' => 'form-horizontal', 'method' => 'POST', 'url' => route('produtos.salvar'),
+                                'files' => true]) }}
                             @endif
                                     <div class="form-group">
                                         {!! Form::label('descricao','Descrição: ',['class' => 'control-label col-md-4']) !!}
