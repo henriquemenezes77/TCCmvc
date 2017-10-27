@@ -64,25 +64,21 @@ class ProdutosController extends Controller
 
         //verifica se a img existe e faz a validação da mesma
         if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
-            foreach ($request->imagem as $imagem){
             $filePath = $request->file('imagem')->store('public');
-            ProdutosImg::create([
-               'id_produto' =>$request->id,
-                'imagem' => $filePath,
-            ]);
-            }
-            //pega o nome da imagem para armazenar na base (nome+extensao)
-            //$filename = $request->imagem->getFilename() . '.' . $request->imagem->extension();
-            //move a imagem para /public/images
-            // $request->imagem->move(public_path('images'), $filename);
-            //salva
 
             $produto = Produto::create([
                 'descricao' => $request['descricao'],
                 'valor' => $request['valor'],
                 'id_categorias' => $request['id_categorias'],
                 'imagem' => $filePath,
+
             ]);
+            foreach ($request->file('imagem') as $imagem){
+                ProdutosImg::create([
+                    'id_produto' =>$request->id,
+                    'imagem' => $filePath,
+                ]);
+            }
 
 
             \Session::flash('mensagem_sucesso_produtos', 'Produto cadastrado com sucesso!!');
