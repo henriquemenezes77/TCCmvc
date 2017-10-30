@@ -13,12 +13,13 @@ class ProdutoImg extends Migration
      */
     public function up()
     {
-        Schema::create('produto_img',function(Blueprint $table){
+        Schema::create('produtos_imgs',function(Blueprint $table){
             $table->increments('id');
-            $table->integer('id_produtos')->unsigned();
+            $table->integer('id_produto')->unsigned();
             $table->string('imagem')->nullable();
             $table->timestamps();
-            $table->foreign('id_produtos')->references('id')->on('produtos')->onDelete('cascade');
+
+            $table->foreign('id_produto')->references('id')->on('produtos')->onDelete('cascade');
         });
     }
 

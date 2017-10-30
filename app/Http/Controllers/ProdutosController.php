@@ -63,23 +63,23 @@ class ProdutosController extends Controller
         ]);
 
         //verifica se a img existe e faz a validação da mesma
-        if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
-            $filePath = $request->file('imagem')->store('public');
+        //if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+        //   $filePath = $request->file('imagem')->store('public');
 
-            $produto = Produto::create([
-                'descricao' => $request['descricao'],
-                'valor' => $request['valor'],
-                'id_categorias' => $request['id_categorias'],
-                'imagem' => $filePath,
+        $produto = Produto::create([
+            'descricao' => $request['descricao'],
+            'valor' => $request['valor'],
+            'id_categorias' => $request['id_categorias']
+        ]);
 
-            ]);
-            foreach ($request->file('imagem') as $imagem){
-                ProdutosImg::create([
-                    'id_produto' =>$request->id,
-                    'imagem' => $filePath,
-                ]);
+        if ($request->hasFile('imagem')) {
+            foreach ($request->file('imagem') as $imagem) {
+                if ($imagem->isValid()) {
+                    $produto->imagens()->create([
+                        'imagem' => $imagem->store('public')
+                    ]);
+                }
             }
-
 
             \Session::flash('mensagem_sucesso_produtos', 'Produto cadastrado com sucesso!!');
             return Redirect::to('produtos');
@@ -109,7 +109,7 @@ class ProdutosController extends Controller
      */
 
     Public function edit(Produto $produto)
-    {   
+    {
         //aqui esta editando produto
         return view('produtos.formulario')
             ->with('produto', $produto)
@@ -131,22 +131,19 @@ class ProdutosController extends Controller
             'valor' => 'required',
             'id_categorias' => 'required'
         ]);
-        
-        if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
-            
-            if (Storage::exists($produto->imagem)) {
-                Storage::delete($produto->imagem);
-                $produto->imagem = null;
+
+        $produto->fill($request->except('imagem'))->update();
+
+        if ($request->hasFile('imagem')) {
+            foreach ($request->file('imagem') as $imagem) {
+                if ($imagem->isValid()) {
+                    $produto->imagens()->create([
+                        'imagem' => $imagem->store('public')
+                    ]);
+                }
             }
-
-            $filename = $request->file('imagem')->store('public');
-
-            $produto->fill($request->all());
-            $produto->imagem = $filename;
-            $produto->update();
-        } else {
-            $produto->update($request->all());
         }
+
 
         \Session::flash('mensagem_sucesso_produtos', "Produto atualizado com sucesso");
         return Redirect::to('produtos');

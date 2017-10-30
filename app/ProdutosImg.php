@@ -10,6 +10,6 @@ class ProdutosImg extends Model
 
     public function produtos(){
         //1 para n
-        return $this -> belongsTo('App\Produto');
+        return $this->belongsTo(Produto::class);
     }
 }
