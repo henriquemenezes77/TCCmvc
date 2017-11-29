@@ -35,9 +35,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('produtos/novo', 'ProdutosController@novo')->name('produtos.novo');
     Route::post('produtos/salvar', 'ProdutosController@store')->name('produtos.salvar');
     Route::get('produtos/deletar/{produto}', 'ProdutosController@destroy');
+    Route::delete('produtos/deletar/{produto}/{imagem}','ProdutosController@deleteImg');
     Route::get('produtos/editar/{produto}', 'ProdutosController@edit')->name('produtos.editar');
     Route::patch('produtos/{produto}', 'ProdutosController@update')->name('produtos.update');
     View::composer('templates.main', 'CategoryComposer');
 });
-//Auth::routes();
+Auth::routes();
 
