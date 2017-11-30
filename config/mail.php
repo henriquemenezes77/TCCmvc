@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => env('MAIL_DRIVER', 'mail'),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,8 @@ return [
     */
 
     'from' => [
-        'kinect' =>  'kinect.webapp@gmail.com', 'name' =>  'Kinect WebApp'
+        'address' => env('MAIL_FROM_ADDRESS', 'kinect.webapp@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'Henrique - Administrador'),
     ],
 
     /*
@@ -70,7 +71,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => env('MAIL_ENCRYPTION', 'tls'),//tls
 
     /*
     |--------------------------------------------------------------------------
@@ -83,9 +84,9 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME','kinect.webapp@gmail.com '),
+    'username' => env('MAIL_USERNAME'),
 
-    'password' => env('MAIL_PASSWORD','evolh321'),
+    'password' => env('MAIL_PASSWORD'),
 
     /*
     |--------------------------------------------------------------------------
