@@ -39,6 +39,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('produtos/editar/{produto}', 'ProdutosController@edit')->name('produtos.editar');
     Route::patch('produtos/{produto}', 'ProdutosController@update')->name('produtos.update');
     View::composer('templates.main', 'CategoryComposer');
+    //Recuperar senha
+    Route::get('forgot', ['as' =>'password/email', 'uses' => 'Auth\PasswordController@getEmail']);
+    Route::post('forgot', ['as' =>'password/email', 'uses' => 'Auth\PasswordController@postEmail']);
+    // Password reset routes...
+    Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+    Route::post('password/reset', 'Auth\PasswordController@postReset');
 });
-Auth::routes();
+//Auth::routes();
 
