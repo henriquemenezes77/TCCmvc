@@ -78,7 +78,7 @@
 
                                                     <div class="caption">
                                                         <!-- GERAR ROTA PARA REMOCAO DE IMG -->
-                                                        <a href="produtos/deletar/{{$produto->id}}/{{$imagem->id}}" class="btn btn-sm btn-danger">
+                                                        <a href="{{ route('produtos.deleteImg', [$produto->id, $imagem->id]) }}" class="btn btn-sm btn-danger">
                                                             Remover
                                                         </a>
                                                     </div>

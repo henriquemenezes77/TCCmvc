@@ -162,7 +162,7 @@ class ProdutosController extends Controller
         \Session::flash('mensagem_sucesso_produtos', 'Produto deletado!');
         return back();
     }
-    public function deleteImg(Imagem $imagem)
+    public function deleteImg(Produto $produto, ProdutosImg $imagem)
     {
         $imagem->delete();
         \Session::flash('mensagem_sucesso_produtos','Imagem deletada!');
